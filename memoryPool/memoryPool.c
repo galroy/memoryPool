@@ -55,6 +55,9 @@ int main()
 		printf("alloc memory failed\n");
 	}
 
+	memPool_destroyMemory(p);
+	printf("get available mem %zu\n", memPool_getAvailableMemory(p));
+
    
 }
 
@@ -75,7 +78,9 @@ size_t memPool_getAvailableMemory(MemPool* p) {
 }
 
 void* memPool_alloc(MemPool* p, size_t size) {
-	if (memPool_getAvailableMemory(p) < size) return NULL;
+	if (memPool_getAvailableMemory(p) < size) {
+		return NULL;
+	}
 	void* mem = (void*)p->next;
 	p->next += size;
 	return mem;
